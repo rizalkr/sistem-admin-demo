@@ -97,3 +97,4 @@ export function getWhatsAppUrl(): string {
   }
   return `https://wa.me/${cleanNumber}?text=${message}`;
 }
+

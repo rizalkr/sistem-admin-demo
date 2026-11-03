@@ -53,3 +53,4 @@ export interface MonthlyReportRow {
   totalRevenuePaid: number;
   totalReceivable: number;
 }
+
