@@ -23,7 +23,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# Tooling & taste-skill inspection artifacts
+# TypeScript cache
+*.tsbuildinfo
+next-env.d.ts
 .taste-skill/
 .turbo
 

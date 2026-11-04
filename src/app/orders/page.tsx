@@ -12,8 +12,8 @@ export default function OrdersPage() {
   const {
     orders,
     openAddOrderModal,
-    cyclePaymentStatus,
-    cycleProductionStatus,
+    setPaymentStatus,
+    setProductionStatus,
   } = useDemo();
 
   const [activeTab, setActiveTab] = useState<FilterTab>('ALL');
@@ -191,7 +191,7 @@ export default function OrdersPage() {
                   <th className="py-3 px-3 sm:px-4 font-normal text-right">Total Nilai</th>
                   <th className="py-3 px-3 sm:px-4 font-normal text-center">Status Bayar</th>
                   <th className="py-3 px-3 sm:px-4 font-normal text-center">Status Produksi</th>
-                  <th className="py-3 px-3 sm:px-4 font-normal text-center">Aksi Cepat</th>
+                  <th className="py-3 px-3 sm:px-4 font-normal text-center">Ubah status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#f0f1f2]">
@@ -234,43 +234,42 @@ export default function OrdersPage() {
                       )}
                     </td>
 
-                    {/* Status Bayar (Interactive Badge) */}
+                    {/* Status Bayar (Badge) */}
                     <td className="py-3.5 px-3 sm:px-4 text-center whitespace-nowrap">
-                      <PaymentBadge
-                        status={ord.paymentStatus}
-                        interactive
-                        onClick={() => cyclePaymentStatus(ord.id)}
-                      />
+                      <PaymentBadge status={ord.paymentStatus} />
                     </td>
 
-                    {/* Status Produksi (Interactive Badge) */}
+                    {/* Status Produksi (Badge) */}
                     <td className="py-3.5 px-3 sm:px-4 text-center whitespace-nowrap">
-                      <ProductionBadge
-                        status={ord.productionStatus}
-                        interactive
-                        onClick={() => cycleProductionStatus(ord.id)}
-                      />
+                      <ProductionBadge status={ord.productionStatus} />
                     </td>
 
-                    {/* Aksi Cepat Buttons */}
+                    {/* Ubah Status Dropdowns */}
                     <td className="py-3.5 px-3 sm:px-4 text-center whitespace-nowrap">
                       <div className="inline-flex items-center gap-1.5">
-                        <button
-                          type="button"
-                          onClick={() => cyclePaymentStatus(ord.id)}
-                          title="Ubah Status Bayar (Belum -> DP -> Lunas)"
-                          className="px-2 py-1 text-[11px] font-medium bg-[#f4f6f9] hover:bg-[#e8ecf2] text-[#131416] border border-[#cdced1] rounded cursor-pointer transition-colors active:scale-95"
+                        <select
+                          value={ord.paymentStatus}
+                          onChange={(e) => setPaymentStatus(ord.id, e.target.value as PaymentStatus)}
+                          aria-label={`Ubah status bayar ${ord.id}`}
+                          title="Pilih status bayar"
+                          className="h-7 px-2 text-[11px] font-medium bg-[#ffffff] border border-[#cdced1] rounded text-[#131416] hover:border-[#1e2b4b] focus:outline-none focus:border-[#1e2b4b] cursor-pointer transition-colors"
                         >
-                          Bayar ↻
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => cycleProductionStatus(ord.id)}
-                          title="Ubah Status Produksi (Baru -> Diproses -> Selesai)"
-                          className="px-2 py-1 text-[11px] font-medium bg-[#f4f6f9] hover:bg-[#e8ecf2] text-[#131416] border border-[#cdced1] rounded cursor-pointer transition-colors active:scale-95"
+                          <option value="Belum Bayar">Belum Bayar</option>
+                          <option value="DP">DP</option>
+                          <option value="Lunas">Lunas</option>
+                        </select>
+
+                        <select
+                          value={ord.productionStatus}
+                          onChange={(e) => setProductionStatus(ord.id, e.target.value as ProductionStatus)}
+                          aria-label={`Ubah status produksi ${ord.id}`}
+                          title="Pilih status produksi"
+                          className="h-7 px-2 text-[11px] font-medium bg-[#ffffff] border border-[#cdced1] rounded text-[#131416] hover:border-[#1e2b4b] focus:outline-none focus:border-[#1e2b4b] cursor-pointer transition-colors"
                         >
-                          Produksi ↻
-                        </button>
+                          <option value="Baru">Baru</option>
+                          <option value="Diproses">Diproses</option>
+                          <option value="Selesai">Selesai</option>
+                        </select>
                       </div>
                     </td>
                   </tr>
